@@ -1,4 +1,5 @@
 using MeuSiteEmMVC.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,10 +7,20 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddDbContext<BancoContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DataBase"));
+});
+
 //builder.Services.AddDbContext<BancoContext>(options =>
 //{
 //    options.UseSqlServer(builder.Configuration.GetConnectionString("BolConnection"));
 //});
+
+//builder.Services.AddIdentity<FrameworkSqlServer, IdentityRole>()
+//    .AddEntityFrameworkStores<BancoContext>()
+//    .AddDefaultTokenProviders();
+
 
 var app = builder.Build();
 

@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewData["Title"] = "Contatos";
+}
+@*<h1>@ViewData["Title"]</h1>*@
+
+<div class="text-center">
+	<h1>Contatos</h1>
+</div>
+
+<p>Alguns contatos existem aqui</p>
+
+<div class="text-center">
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">First</th>
+				<th scope="col">Last</th>
+				<th scope="col">Handle</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr>
+				<th scope="row">1</th>
+				<td>Mark</td>
+				<td>Otto</td>
+				<td>68168168</td>
+				<td>
+					<partial name="_BotoesContato" />
+				</td>
+			</tr>
+			<tr>
+				<th scope="row">2</th>
+				<td>Jacob</td>
+				<td>Thornton</td>
+				<td>gordo</td>
+				<td>
+					<partial name="_BotoesContato" />
+				</td>
+			</tr>
+			<tr>
+				<th scope="row">3</th>
+				<td>Larry the Bird</td>
+				<td>Larry the Bird</td>
+				<td>Larry the Bird</td>
+				@* <td>@twitter</td> *@
+				<td>
+					<partial name="_BotoesContato" />
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+</div>
+
+
+<a class="btn btn-success" role="button" asp-controller="Contato" asp-action="Criar">Adicionar Contato</a>
+
