@@ -1,9 +1,10 @@
-﻿@model List<ContatoModel>
+﻿
+@model List<ContatoModel>
 @{
 	ViewData["Title"] = "Contatos";
 }
-@*<h1>@ViewData["Title"]</h1>*@
 
+@*<h1>@ViewData["Title"]</h1>*@
 @* @for (int i=0; i < 100; i++){ Console.WriteLine("Mano"); } *@
 
 <div class="text-center">
@@ -29,20 +30,26 @@
 			{
 				foreach (ContatoModel contato in Model)
 				{
-					Console.WriteLine($"{contato.Id}, {contato.Nome}, {contato.Email}");
+					@* Console.WriteLine($"{contato.Id}, {contato.Nome}, {contato.Email}"); *@
 					<tr>
                         <th scope="row">@contato.Id</th>
-                        <td>@contato.Nome</td>
-                        <td>@contato.Email</td>
-                        <td>
-                            @* <partial name="_BotoesContato" /> *@
-							<div class="btn-group" role="group">
-								<button type="button" class="btn btn-primary" asp-route="@contato.Id">Editar</button>
 
+						@if (contato.Esconder == 0){
+							<td>@contato.Nome</td>
+							<td>@contato.Email</td>
+						}
+						else{
+							<td>****</td>
+							<td>****</td>
+						}
+
+                        <td>
+							<div class="btn-group" role="group">
+								<a class="btn btn-primary" role="button" asp-route-id="@contato.Id" asp-controller="Contato" asp-action="Editar">Editar</a>
 
 								<a class="btn btn-danger" role="button" asp-route-id="@contato.Id" asp-controller="Contato" asp-action="Deletar">Apagar</a>
 								
-								<button type="button" class="btn btn-secondary" asp-route="@contato.Id">Esconder</button>
+								<a class="btn btn-secondary" role="button" asp-route-id="@contato.Id" asp-controller="Contato" asp-action="Esconder">Esconder</a>
 							</div>
 
                         </td>
@@ -57,4 +64,3 @@
 
 
 <a class="btn btn-success" role="button" asp-controller="Contato" asp-action="Criar">Adicionar Contato</a>
-

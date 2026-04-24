@@ -24,28 +24,42 @@ namespace MeuSiteEmMVC.Controllers
         {
             return View();
         }
-        public IActionResult Editar()
+        public IActionResult Editar(int id)
         {
-            return View();
+            ContatoModel contato = _contatoRepositorio.BuscarPorId(id);
+            return View(contato);
         }
 
         //
         [HttpPost]
         public IActionResult Criar(ContatoModel contato)
         {
-            _contatoRepositorio.Adicionar(contato);
-            return RedirectToAction("Index");
+            if (_contatoRepositorio.Adicionar(contato))
+                return RedirectToAction("Index");
+            else
+                return View();
+        }
+
+        [HttpPost]
+        public IActionResult Editar(ContatoModel contato)
+        {
+            if (_contatoRepositorio.Editar(contato))
+                return RedirectToAction("Index");
+            else
+                return View();
         }
 
         public IActionResult Deletar(int id)
         {
-
-
-
             _contatoRepositorio.Deletar(id);
             return RedirectToAction("Index");
         }
-        
+
+        public IActionResult Esconder(int id)
+        {
+            _contatoRepositorio.Esconder(id);
+            return RedirectToAction("Index");
+        }
         
     }
 }

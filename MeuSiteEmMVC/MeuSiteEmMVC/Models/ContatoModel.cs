@@ -8,6 +8,6 @@
 
         public string Email { get; set; }
 
-
+        public byte Esconder { get; set; }
     }
 }
