@@ -1,4 +1,5 @@
 using MeuSiteEmMVC.Data;
+using MeuSiteEmMVC.Repositorio;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,15 +13,16 @@ builder.Services.AddDbContext<BancoContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DataBase"));
 });
 
+builder.Services.AddScoped<IContatoRepositorio, ContatoRepositorio>();
+
+
 //builder.Services.AddDbContext<BancoContext>(options =>
 //{
 //    options.UseSqlServer(builder.Configuration.GetConnectionString("BolConnection"));
 //});
-
 //builder.Services.AddIdentity<FrameworkSqlServer, IdentityRole>()
 //    .AddEntityFrameworkStores<BancoContext>()
 //    .AddDefaultTokenProviders();
-
 
 var app = builder.Build();
 
