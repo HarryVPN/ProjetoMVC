@@ -10,7 +10,6 @@ namespace MeuSiteEmMVC.Models
 
         [EmailAddress(ErrorMessage = "Sintaxe de Email inválida")]
         public string Email { get; set; }
-      
         
         public byte Esconder { get; set; }
     }

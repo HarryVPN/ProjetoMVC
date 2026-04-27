@@ -58,8 +58,9 @@ namespace MeuSiteEmMVC.Repositorio
         {
             ContatoModel contato = BuscarPorId(id);
 
-            contato.Esconder = (byte)(contato.Esconder == 1 ? 0 : (contato.Esconder == 0 ? 1 : contato.Esconder));
-            
+                               //se for 1, vira 0. Se for 0, vira 1
+            contato.Esconder = (byte)(contato.Esconder == 1 ? 0 : 1);
+
             _bancoContext.Contato.Update(contato);
             _bancoContext.SaveChanges();
         }
@@ -69,6 +70,5 @@ namespace MeuSiteEmMVC.Repositorio
             return _bancoContext.Contato.ToList();
         }
 
-       
     }
 }

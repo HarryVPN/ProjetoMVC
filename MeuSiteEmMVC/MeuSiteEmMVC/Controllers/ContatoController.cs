@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Net.NetworkInformation;
 
-using MeuSiteEmMVC.Views.Shared;
+using MeuSiteEmMVC.Enums;
 
 namespace MeuSiteEmMVC.Controllers
 {

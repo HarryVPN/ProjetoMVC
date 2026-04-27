@@ -1,4 +1,4 @@
-﻿namespace MeuSiteEmMVC.Views.Shared
+﻿namespace MeuSiteEmMVC.Enums
 {
     public static class IDsTempData
     {
