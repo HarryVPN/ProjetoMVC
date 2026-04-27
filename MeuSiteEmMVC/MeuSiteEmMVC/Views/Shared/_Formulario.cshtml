@@ -2,11 +2,11 @@
 
 <div class="form-group">
     <label for="nome">Nome</label>
-    <input type="text" asp-for="Nome" class="form-control" required id="exampleNome" aria-describedby="nomeHelp" placeholder="Digite o Nome">
+    <input type="text" required asp-for="Nome" class="form-control" aria-describedby="nomeHelp" placeholder="Digite o Nome">
 </div>
 
 <div class="form-group">
     <label for="email">Email</label>
-    <input type="text" asp-for="Email" class="form-control" required id="exampleEmail" placeholder="Digite o Email">
-    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    <input type="text" required asp-for="Email" class="form-control" placeholder="Digite o Email">
+    @Html.ValidationMessageFor(x => x.Email)    
 </div>

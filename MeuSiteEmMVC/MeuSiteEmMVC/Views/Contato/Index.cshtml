@@ -1,15 +1,26 @@
 ﻿
+@using MeuSiteEmMVC.Views.Shared;
+
 @model List<ContatoModel>
 @{
+	
 	ViewData["Title"] = "Contatos";
 }
 
 @*<h1>@ViewData["Title"]</h1>*@
 @* @for (int i=0; i < 100; i++){ Console.WriteLine("Mano"); } *@
 
-<div class="text-center">
-	<h1>Contatos</h1>
-</div>
+@* <div class="text-center"> *@
+<h1 class="text-center">Contatos</h1>
+@* </div> *@
+
+@if (TempData[IDsTempData.SucessoAddContato] != null)
+{
+    <div role="alert" class="alert alert-success">
+        <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">X</button>
+        @TempData[IDsTempData.SucessoAddContato]
+    </div>
+}
 
 <p>@Model.Count() contatos existem aqui</p>
 

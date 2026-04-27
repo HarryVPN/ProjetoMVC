@@ -1,4 +1,6 @@
-﻿namespace MeuSiteEmMVC.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MeuSiteEmMVC.Models
 {
     public class ContatoModel
     {
@@ -6,8 +8,10 @@
 
         public string Nome { get; set; }
 
+        [EmailAddress(ErrorMessage = "Sintaxe de Email inválida")]
         public string Email { get; set; }
-
+      
+        
         public byte Esconder { get; set; }
     }
 }

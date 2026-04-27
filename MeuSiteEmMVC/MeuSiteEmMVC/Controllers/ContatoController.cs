@@ -2,6 +2,9 @@
 using MeuSiteEmMVC.Repositorio;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Net.NetworkInformation;
+
+using MeuSiteEmMVC.Views.Shared;
 
 namespace MeuSiteEmMVC.Controllers
 {
@@ -34,8 +37,11 @@ namespace MeuSiteEmMVC.Controllers
         [HttpPost]
         public IActionResult Criar(ContatoModel contato)
         {
-            if (_contatoRepositorio.Adicionar(contato))
+            if (ModelState.IsValid && _contatoRepositorio.Adicionar(contato))
+            {
+                TempData[IDsTempData.SucessoAddContato] = $"Contato #{contato.Id} ({contato.Nome}) foi Adicionado";
                 return RedirectToAction("Index");
+            }   
             else
                 return View();
         }
@@ -43,10 +49,13 @@ namespace MeuSiteEmMVC.Controllers
         [HttpPost]
         public IActionResult Editar(ContatoModel contato)
         {
-            if (_contatoRepositorio.Editar(contato))
+            if (ModelState.IsValid && _contatoRepositorio.Editar(contato))
+            {
+                TempData[IDsTempData.SucessoAddContato] = $"Contato #{contato.Id} ({contato.Nome}) foi Alterado";
                 return RedirectToAction("Index");
+            }   
             else
-                return View();
+                return View("Editar",contato);
         }
 
         public IActionResult Deletar(int id)
