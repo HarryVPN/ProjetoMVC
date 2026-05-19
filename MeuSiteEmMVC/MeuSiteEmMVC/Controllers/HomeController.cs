@@ -8,10 +8,7 @@ namespace MeuSiteEmMVC.Controllers
     {
         public IActionResult Index()
         {
-
-            HomeModel home = new("@gmail","Eu");
-             
-            return View(home);
+            return View();
         }
 
         public IActionResult Privacy()

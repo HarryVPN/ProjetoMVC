@@ -1,6 +1,47 @@
 ﻿@{
-    ViewData["Title"] = "Privacidade";
+	Layout = "_Layout";
 }
-@*<h1>@ViewData["Title"]</h1>*@
 
-<p>Use this page to detail your site's privacy policy.</p>
+<div class="row">
+	<div class="card shadow">
+		<a>Entrada da Guarita</a>
+
+        
+		<video id="video" width="640" height="480" autoplay playsinline></video>
+		<button id="startCamera">Start Camera</button>
+		<button id="capture">Capture</button>
+
+
+		<canvas id="canvas" width="640" height="480" style="border:1px solid #ccc;"></canvas>
+
+		<script>
+					const video = document.getElementById('video');
+					const canvas = document.getElementById('canvas');
+					const startButton = document.getElementById('startCamera');
+					const captureButton = document.getElementById('capture');
+
+					// Start webcam
+					startButton.addEventListener('click', async () => {
+						try {
+							const stream = await navigator.mediaDevices.getUserMedia({
+								video: true,
+								audio: false
+							});
+
+							video.srcObject = stream;
+						}
+						catch (err) {
+							console.error("Error accessing webcam:", err);
+							alert("Cannot access webcam");
+						}
+					});
+
+					// Capture image
+					captureButton.addEventListener('click', () => {
+						const context = canvas.getContext('2d');
+
+						context.drawImage(video, 0, 0, canvas.width, canvas.height);
+					});
+		</script>
+	</div>
+</div>
