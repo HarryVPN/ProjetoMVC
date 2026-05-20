@@ -2,46 +2,90 @@
 	Layout = "_Layout";
 }
 
-<div class="row">
+<head>
+	<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+</head>
+<body class="row">
+
 	<div class="card shadow">
 		<a>Entrada da Guarita</a>
 
-        
-		<video id="video" width="640" height="480" autoplay playsinline></video>
-		<button id="startCamera">Start Camera</button>
-		<button id="capture">Capture</button>
+		<button id="btnLimpar">Limpar</button>
 
+		<div class="form-group">
+			<label for="nome">Nome</label>
+			<input id="placaUi" type="text" class="form-control" aria-describedby="nomeHelp" placeholder="ABC1D23">
+		</div>
 
-		<canvas id="canvas" width="640" height="480" style="border:1px solid #ccc;"></canvas>
+		<div id="plates"></div>
 
-		<script>
-					const video = document.getElementById('video');
-					const canvas = document.getElementById('canvas');
-					const startButton = document.getElementById('startCamera');
-					const captureButton = document.getElementById('capture');
+		<img src="http://localhost:5000/video_feed">
 
-					// Start webcam
-					startButton.addEventListener('click', async () => {
-						try {
-							const stream = await navigator.mediaDevices.getUserMedia({
-								video: true,
-								audio: false
-							});
-
-							video.srcObject = stream;
-						}
-						catch (err) {
-							console.error("Error accessing webcam:", err);
-							alert("Cannot access webcam");
-						}
-					});
-
-					// Capture image
-					captureButton.addEventListener('click', () => {
-						const context = canvas.getContext('2d');
-
-						context.drawImage(video, 0, 0, canvas.width, canvas.height);
-					});
-		</script>
 	</div>
-</div>
+</body>
+
+<script>
+	const btnLimpar = document.getElementById('btnLimpar')
+	const placaUi = document.getElementById('placaUi')
+
+	const url = "http:localhost:5000"
+
+	btnLimpar.addEventListener('click',async () => {
+		const response = await fetch(url+"/reset", {
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json'
+			}
+		});
+
+		btnLimpar.textContent = response
+	})
+
+	// async function atualizarPlaca() {
+ //        try {
+ //            const response = await fetch(url+"/get_placa")
+
+ //            const data = response await response.json()
+
+ //            console.log(data)
+
+ //            if (data) {
+
+ //                placaUi.value = data
+
+ //                div.innerHTML = `
+ //                    <p>
+ //                        Plate: ${data}
+ //                        Confidence: ${data}%
+ //                    </p>
+ //                `
+ //            }
+ //        } catch(err) {
+ //            console.error(err)
+ //        }
+ //    }
+
+ //    setInterval(atualizarPlaca, 1)
+
+			// const socket = io("httplocalhost:5000");
+
+			// socket.on('connect', () => {
+			// 	console.log("Connected to Flask socket server")
+			// });
+
+			// socket.on('nova_placa', function(data) {
+			// 	console.log(data)
+				
+			// 	placaUi.value = data.placa
+				
+			// 	placaUi.placeholder = data.placa+", "+data.confidence+"%"
+				
+			// 	const div = document.getElementById("plates");
+			// 	div.innerHTML += `
+			// 		<p>
+			// 			Plate: ${data.placa}
+			// 			Confidence: ${data.confidence}%
+			// 		</p>
+			// 	`;
+			// });
+	</script>
