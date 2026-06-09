@@ -1,16 +1,128 @@
-﻿@{
+﻿@model DenunciaModel
+@{
     ViewData["Title"] = "Início";
 }
 
-<div class="text-center">
-    
+<body class="text-center">
+
     <p>Sistema de Controle</p>
 
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    
+
     <div role="alert" class="alert alert-success">
         <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">X</button>
         Bem vindo ao site!
     </div>
+</body>
 
-</div>
+
+<style>
+    .item {
+        margin-bottom: 20px;
+    }
+</style>
+<form asp-controller="Denuncia" asp-action="Denunciar" method="post" enctype="multipart/form-data" class="text-lg-start">
+
+    <div class="form-group item">
+        <label for="contexto">Denuncia</label>
+        <input required asp-for="contexto" id="contexto" class="form-control" placeholder="Explique seu problema" />
+    </div>
+
+    <div class="form-group item">
+        <label for="imagemInput">Imagem (opcional)</label>
+        <input asp-for="arquivoImg" type="file" accept="image/*" id="imagemInput" class="form-control item" placeholder="Digite o Nome" />
+        <img id="preview" style="max-width:300px; display:none;" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Enviar</button>
+</form>
+<br/>
+
+
+<img src="~/images/placa.png" />
+
+<!-- File input -->
+<input type="file" id="imageInput" accept="image/*">
+<br>
+<!-- Preview -->
+<img id="preview" alt="Image preview will appear here">
+
+<!-- Submit button -->
+<button id="uploadBtn">Upload</button>
+
+
+<script>
+    const imagemInput = document.getElementById('imagemInput');
+    const preview = document.getElementById('preview');
+
+    imagemInput.addEventListener('change', function () {
+
+        const file = this.files[0];
+
+        if (!file) {
+            preview.style.display = 'none';
+            return;
+        }
+
+        preview.src = URL.createObjectURL(file);
+        preview.style.display = 'block';
+    });
+</script>
+
+<script>
+    const imageInput = document.getElementById('imageInput');
+    const preview = document.getElementById('preview');
+    const uploadBtn = document.getElementById('uploadBtn');
+    let selectedFile = null;
+
+    // Show preview when file is selected
+    imageInput.addEventListener('change', function () {
+        const file = this.files[0];
+        if (file) {
+            if (!file.type.startsWith('image/')) {
+                alert('Please select a valid image file.');
+                this.value = ''; // reset input
+                preview.src = '';
+                selectedFile = null;
+                return;
+            }
+            selectedFile = file;
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Upload image to server
+    uploadBtn.addEventListener('click', async function () {
+        if (!selectedFile) {
+            alert('Please select an image first.');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('imagem', selectedFile);
+
+        try {
+            const response = await fetch('/Denuncia/SalvarImagem', { // Change to your server endpoint
+                method: 'POST',
+                body: formData
+            });
+
+            if (!response.ok) {
+                throw new Error(`Server error: ${response.status}`);
+            }
+
+            const result = await response.json();
+            alert('Image uploaded successfully! Server says: ' + JSON.stringify(result));
+
+            preview.src = null
+
+        } catch (error) {
+            console.error('Upload failed:', error);
+            alert('Upload failed: ' + error.message);
+        }
+    });
+</script>

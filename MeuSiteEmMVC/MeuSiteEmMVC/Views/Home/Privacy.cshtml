@@ -1,91 +1,70 @@
 ﻿@{
-	Layout = "_Layout";
+    Layout = "_Layout";
 }
-
+@*
 <head>
 	<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
-</head>
+</head> *@
 <body class="row">
 
-	<div class="card shadow">
-		<a>Entrada da Guarita</a>
+    <div class="card shadow">
+        <a>Entrada da Guarita</a>
 
-		<button id="btnLimpar">Limpar</button>
+        <button id="btnLimpar">Limpar</button>
+        <button id="btnPlaca">Placa</button>
 
-		<div class="form-group">
-			<label for="nome">Nome</label>
-			<input id="placaUi" type="text" class="form-control" aria-describedby="nomeHelp" placeholder="ABC1D23">
-		</div>
 
-		<div id="plates"></div>
+        <div class="form-group">
+            <label id="placaUi" for="nome">Nome</label>
+            <input type="text" class="form-control" aria-describedby="nomeHelp" placeholder="ABC1D23">
+        </div>
 
-		<img src="http://localhost:5000/video_feed">
+        <a id="plates">Ppppp</a>
 
-	</div>
+        <img src="http://10.1.94.2:5000/video_feed">
+
+    </div>
 </body>
 
 <script>
-	const btnLimpar = document.getElementById('btnLimpar')
-	const placaUi = document.getElementById('placaUi')
+    const btnLimpar = document.getElementById('btnLimpar')
+    const placaUi = document.getElementById('placaUi')
 
-	const url = "http:localhost:5000"
+    const url = "http://10.1.94.2:5000"
 
-	btnLimpar.addEventListener('click',async () => {
-		const response = await fetch(url+"/reset", {
-			method: 'GET',
-			headers: {
-				'Accept': 'application/json'
-			}
-		});
+    btnLimpar.addEventListener('click',async () => {
 
-		btnLimpar.textContent = response
-	})
+        document.getElementById('plates').textContent = Date.now();
 
-	// async function atualizarPlaca() {
- //        try {
- //            const response = await fetch(url+"/get_placa")
+        fetch(url+"/reset", {
+            method: 'GET',
+            headers: { 'Accept': 'application/json' }
+        });
+    })
 
- //            const data = response await response.json()
+    const btnPlaca = document.getElementById('btnPlaca')
 
- //            console.log(data)
+    btnPlaca.addEventListener('click', async () => {
 
- //            if (data) {
+        placaUi.textContent = Date.now();
 
- //                placaUi.value = data
+        try {
 
- //                div.innerHTML = `
- //                    <p>
- //                        Plate: ${data}
- //                        Confidence: ${data}%
- //                    </p>
- //                `
- //            }
- //        } catch(err) {
- //            console.error(err)
- //        }
- //    }
+            const response = await fetch(url + "/get_placa");
 
- //    setInterval(atualizarPlaca, 1)
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            }
 
-			// const socket = io("httplocalhost:5000");
+            const json = await response.json();
 
-			// socket.on('connect', () => {
-			// 	console.log("Connected to Flask socket server")
-			// });
+            console.log(json);
 
-			// socket.on('nova_placa', function(data) {
-			// 	console.log(data)
-				
-			// 	placaUi.value = data.placa
-				
-			// 	placaUi.placeholder = data.placa+", "+data.confidence+"%"
-				
-			// 	const div = document.getElementById("plates");
-			// 	div.innerHTML += `
-			// 		<p>
-			// 			Plate: ${data.placa}
-			// 			Confidence: ${data.confidence}%
-			// 		</p>
-			// 	`;
-			// });
-	</script>
+            placaUi.textContent = json.placa;
+
+        } catch (error) {
+            console.error(error.message);
+        }
+    });
+
+</script>

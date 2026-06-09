@@ -18,7 +18,7 @@ namespace MeuSiteEmMVC.Repositorio
 
         public ContatoModel BuscarPorId(int id)
         {
-            ContatoModel? contato = _bancoContext.Contato.FirstOrDefault(x => x.Id == id);
+            ContatoModel? contato = _bancoContext.Contatos.FirstOrDefault(x => x.Id == id);
 
             if (contato == null) { throw new System.Exception("Id de contato nulo"); }
             return contato;
@@ -30,7 +30,7 @@ namespace MeuSiteEmMVC.Repositorio
                 return false;
             }
             
-            _bancoContext.Contato.Add(contato);
+            _bancoContext.Contatos.Add(contato);
             _bancoContext.SaveChanges();
             return true;
         }
@@ -41,7 +41,7 @@ namespace MeuSiteEmMVC.Repositorio
                 return false;
             }
 
-            _bancoContext.Contato.Update(contato);
+            _bancoContext.Contatos.Update(contato);
             _bancoContext.SaveChanges();
             return true;
         }
@@ -50,7 +50,7 @@ namespace MeuSiteEmMVC.Repositorio
         {
            ContatoModel contato = BuscarPorId(id);
 
-           _bancoContext.Contato.Remove(contato);
+           _bancoContext.Contatos.Remove(contato);
            _bancoContext.SaveChanges();
         }
 
@@ -61,13 +61,13 @@ namespace MeuSiteEmMVC.Repositorio
                                //se for 1, vira 0. Se for 0, vira 1
             contato.Esconder = (byte)(contato.Esconder == 1 ? 0 : 1);
 
-            _bancoContext.Contato.Update(contato);
+            _bancoContext.Contatos.Update(contato);
             _bancoContext.SaveChanges();
         }
         
         public List<ContatoModel> BuscarTodos()
         {
-            return _bancoContext.Contato.ToList();
+            return _bancoContext.Contatos.ToList();
         }
 
     }

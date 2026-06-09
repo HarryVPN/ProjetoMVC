@@ -11,7 +11,8 @@ namespace MeuSiteEmMVC.Data
 
         }
 
-        public DbSet<ContatoModel> Contato { get; set; }
+        public DbSet<DenunciaModel> Denuncias { get; set; }
+        public DbSet<ContatoModel> Contatos { get; set; }
         public DbSet<UserModel> Users { get; set; }
     }
 }

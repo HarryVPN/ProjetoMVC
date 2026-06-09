@@ -21,6 +21,11 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\images\placa.png" />
   </ItemGroup>
 
 </Project>
